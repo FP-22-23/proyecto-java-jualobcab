@@ -1,16 +1,18 @@
 package fp.Canciones;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
 
 import fp.utiles.Checkers;
 
 
-public class Canciones {
+public class Cancion {
 	private Data data;
 	private List<String> genres;
 	private LocalDate date;
+	private LocalTime time;
 	private Integer bpm;
 	private Integer duration;
 	private Double score;
@@ -20,11 +22,12 @@ public class Canciones {
 	
 	
 	//Constructor 1
-	public Canciones(Data data, List<String> genres, LocalDate date, Integer bpm, Integer duration, Double score,
+	public Cancion(Data data, List<String> genres, LocalDate date, LocalTime time, Integer bpm, Integer duration, Double score,
 			Boolean award, Integer reproductions, Popularity popularity) {
 		this.data = data;
 		this.genres = genres;
 		this.date = date;
+		this.time = time;
 		this.bpm = bpm;
 		this.duration = duration;
 		this.score = score;
@@ -35,9 +38,10 @@ public class Canciones {
 
 
 	//Constructor 2
-	public Canciones(Data data, LocalDate date, Integer duration, Double score, Boolean award, Integer reproductions) {
+	public Cancion(Data data, LocalDate date, LocalTime time, Integer duration, Double score, Boolean award, Integer reproductions) {
 		this.data = data;
 		this.date = date;
+		this.time = time;
 		this.duration = duration;
 		this.score = score;
 		this.award = award;
@@ -50,7 +54,7 @@ public class Canciones {
 
 	
 	//compareTo
-		public int compareTo(Canciones j) {
+		public int compareTo(Cancion j) {
 			int c;
 			if (j == null) {
 				throw new NullPointerException();
@@ -83,7 +87,7 @@ public class Canciones {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Canciones other = (Canciones) obj;
+		Cancion other = (Cancion) obj;
 		return Objects.equals(data, other.data) && Objects.equals(duration, other.duration);
 	}
 
@@ -91,7 +95,7 @@ public class Canciones {
 	//Representacion como cadena
 	@Override
 	public String toString() {
-		return "Canciones [data=" + data + ", genres=" + genres + ", date=" + date + ", bpm=" + bpm + ", duration="
+		return "Cancion [data=" + data + ", genres=" + genres + ", date=" + date + ", time=" + time + ", bpm=" + bpm + ", duration="
 				+ duration + ", score=" + score + ", award=" + award + ", reproductions=" + reproductions
 				+ ", popularity=" + popularity + "]";
 	}
@@ -126,7 +130,17 @@ public class Canciones {
 		Checkers.check("El año de salida de la cancion debe ser ", (date.isAfter(LocalDate.of(1998,12,31)))&&(date.isBefore(LocalDate.of(2011,1,1))));
 		this.date = date;
 	}
+	
 
+	public LocalTime getTime() {
+		return time;
+	}
+
+
+	public void setTime(LocalTime time) {
+		this.time = time;
+	}
+	
 
 	public Integer getBpm() {
 		return bpm;
@@ -188,9 +202,6 @@ public class Canciones {
 	public void setPopularity(Popularity popularity) {
 		this.popularity = popularity;
 	}
-	
-	
-	
 	
 	
 }
