@@ -13,13 +13,13 @@ public class Parsers {
 
 	public static List<String> parseaGeneros(String genre1, String genre2, String genre3){
 		List<String> res = new ArrayList<String>();
-		if (genre1 != "") {
+		if (!genre1.isEmpty()) {
 			res.add(genre1);
 		}
-		if (genre2 != "") {
+		if (!genre2.isEmpty()) {
 			res.add(genre2);
 		}
-		if (genre3 != "") {
+		if (!genre3.isEmpty()) {
 			res.add(genre3);
 		}
 		return res;
@@ -27,10 +27,10 @@ public class Parsers {
 	
 	public static Boolean parseaBoolean(String award) {
 		Boolean res = null;
-		if (award == "0") {
+		if (award.equals("0")) {
 			res = false;
 		}
-		else if (award == "1"){
+		else if (award.equals("1")){
 			res = true;
 		}
 		return res;

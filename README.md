@@ -6,7 +6,7 @@ En este proyecto voy a trabajar con un dataset de canciones de Spotify publicada
 ## Estructura de las carpetas del proyecto
 
 * **/src**: Directorio con el código fuente.
-  * **fp.CAnciones**: Paquete que contiene los tipos del proyecto.
+  * **fp.Canciones**: Paquete que contiene los tipos del proyecto.
   * **fp.TestCanciones**: Paquete que contiene las clases de test del proyecto.
   * **fp.utiles**:  Paquete que contiene las clases de utilidad. 
 * **/data**: Contiene el dataset del proyecto.
@@ -20,7 +20,8 @@ El dataset original "Spotify Past Decades Songs Attributes" se puede obtener de 
 * **artist**: de tipo cadena, indica el nombre del autor o grupo de la cancion.
 * **country**: de tipo cadena, indica el pais de procedencia del artista o grupo.
 * **genre1, genre2, genre3**:las tres columnas son de tipo cadena, contiene el genero musical de la cancion o nada en caso de que no corresponda.
-* **year, month, day**: las 3 columnas son de tipo entero, que indican el año, mes y dia que se subió esa cancion.
+* **date**: de tipo LocalDate, que indica el año, mes y dia que se subió esa cancion.
+* **time**: de tipo LocalTime, que indica la hora a la que se subió la canción.
 * **bpm**: de tipo entero, contiene el numero de beats por minuto de la cancion.
 * **dur**: de tipo entero, indica la duracion en segundos de la cancion. 
 * **score**: de tipo double, indica la valoracion que obtuvo la cancion.
@@ -39,6 +40,7 @@ Representa una cancion y sus datos.
 - _data_, de tipo _Data_, consultable. Es una propiedad de tipo auxiliar creada, que indica el titulo, autor y pais. 
 - _genres_, de tipo _List<String>_, consultable. Indica los generos musicales de la cancion.
 - _date_, de tipo _LocalDate_, consultable. Indica la fecha en la que salio la cancion.
+- _time_, de tipo _LocalTime_, consultable. Indica la hora a la que salió la cancion.
 - _bpm_, de tipo _Integer_, consultable. Contiene el numero de beats por minuto.
 - _duration_, de tipo _Integer_, consultable. Indica la duracion en segundos de la cancion.
 - _score_, de tipo _Double_, consultable. Indica la valoracion de la cancion.
@@ -69,7 +71,30 @@ Representa una cancion y sus datos.
 
 #### Tipos auxiliares
 
-- Popularity, enumerado. Puede tomar los valores POCO_POPULAR,POPULAR,MUY_POPULAR o TOP_HITS.
+- Data, (String, String, String). El que contiene titulo, autor y pais de la canción.
 
+#### Factoria
+Clase de factoría para construir objetos de tipo Cancion.
 
+* **leeCanciones**(String rutaFichero): Crea un objeto de tipo List a partir de la informacionrecogida del archivo csv, cuya ruta se da como parámetro.
+* **parseaCanciones**(String lineaCSV): Parsea cada linea del fichero para recopilarla como tipo Cancion.
 
+#### Tipo Contenedor (Canciones)
+Clase contenedora de objetos de tipo Cancion.
+
+**Propiedades**
+* listaCanciones: de tipo List, consultable. Lista de las canciones.
+
+**Constructores**
+* C1: Crea un objeto de tipo Canciones sin ninguna cancion almacenada.
+* C2: Crea un objeto de tipo Canciones(List listaCanciones).
+
+**Criterio de igualdad**
+* Dos canciones son iguales si lo son sus propiedades.
+
+**Otras operaciones**
+* _existeCancion(String title)_: Devuelve una respuesta de tipo Boolean dependiendo si el titulo de la cancion pasado como parametro existe en la lista de todos las canciones.
+* _mediaBPM()_: Devuelve un valor Double que es la media de beats por minuto de las canciones del dataset.
+* _cancionesDeUnGenero(String genero):_ Devuelve una List en la que estan las canciones que tienen el genero introducido como parámetro.
+* _cancionesPorAño():_ Devuelve un Map en el que la clave es el año en el que se publicó una cancion y el valor asociado son las canciones que se publicaron en ese año.
+* _mapCancionesPorPaises():_ Devuelve un Map que tiene como claves cada pais del dataset, los cuales tienen asociados como valor el numero de canciones que se publicaron de ese pais.
