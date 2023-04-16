@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import fp.Canciones.Cancion;
 import fp.Canciones.Data;
@@ -22,5 +23,43 @@ public class TestCanciones {
 		for (Cancion x : canciones) {
 			System.out.println(x);
 		}
+		
+		System.out.println("------------------------------------------------------");
+		
+		testExisteCancion("Umbrella",lista);
+		
+		testMediaBPM(lista);
+		
+		testCancionesDeUnGenero("rock", lista);
+		
+		testCancionesPorAño(lista);
+		
+		testMapCancionesPorPaises(lista);
+	}
+	
+	//Tests 
+	public static void testExisteCancion(String nombreC, ListaCanciones listaCanciones) {
+		Boolean res= listaCanciones.existeCancion(nombreC);
+		System.out.println(res);
+	}
+	
+	public static void testMediaBPM(ListaCanciones listaCanciones) {
+		Double res= listaCanciones.mediaBPM();
+		System.out.println(res);
+	}
+	
+	public static void testCancionesDeUnGenero(String genero, ListaCanciones listaCanciones) {
+		List<Cancion> res = listaCanciones.cancionesDeUnGenero(genero);
+		System.out.println(res);
+	}
+	
+	public static void testCancionesPorAño(ListaCanciones listaCanciones) {
+		Map<Integer, List<Cancion>> res = listaCanciones.cancionesPorAño();
+		System.out.println(res);
+	}
+	
+	public static void testMapCancionesPorPaises(ListaCanciones listaCanciones) {
+		Map<String, Integer> res = listaCanciones.mapCancionesPorPaises();
+		System.out.println(res);
 	}
 }

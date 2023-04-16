@@ -2,7 +2,9 @@ package fp.Canciones;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import fp.utiles.Checkers;
@@ -110,5 +112,34 @@ public class ListaCanciones {
 	}
 	
 	//Tipo 4
+	public Map<Integer, List<Cancion>> cancionesPorAño() {
+		Map<Integer, List<Cancion>> res = new HashMap<Integer, List<Cancion>>();
+		for (Cancion c : Canciones) {
+			Integer clave = c.getDate().getYear();
+			if (res.containsKey(clave)) {
+				res.get(clave).add(c);
+			} else {
+				List<Cancion> lista = new ArrayList<Cancion>();
+				lista.add(c);
+				res.put(clave, lista);
+			}
+		}
+		return res;
+	}
 	
+	//Tipo 5
+	public Map<String, Integer> mapCancionesPorPaises(){
+    	Map<String,Integer> res = new HashMap<String, Integer>();
+    	for (Cancion p: Canciones) {
+    		String clave = p.getData().getCountry();
+    		if (res.containsKey(clave)) {
+    			Integer valor = res.get(clave);
+    			valor++;
+    			res.put(clave, valor);
+    		} else {
+    			res.put(clave, 1);
+    		}
+    	}
+    	return res;
+    }
 }
