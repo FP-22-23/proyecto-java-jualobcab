@@ -2,12 +2,18 @@ package fp.Canciones;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.TreeMap;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import fp.utiles.Checkers;
+import fp.Canciones.Popularity;
 
 
 public class ListaCanciones {
@@ -21,6 +27,11 @@ public class ListaCanciones {
 	//Constructor 2
 	public ListaCanciones(List<Cancion> listaCanciones) {
         this.Canciones = new ArrayList<>(listaCanciones);
+	}
+	
+	//Constructor 3
+	public ListaCanciones(Stream<Cancion> listaCanciones) {
+        this.Canciones = listaCanciones.collect(Collectors.toList());
 	}
 	
 	//Getter
@@ -142,4 +153,77 @@ public class ListaCanciones {
     	}
     	return res;
     }
+	
+	//---------------  ENTREGA 3  ---------------
+	
+	// BLOQUE I
+	// Tipo 1
+	public Boolean existeCancion2(String title) {
+		return this.Canciones.stream().anyMatch(c->c.getData().getTitle().equals(title));
+	}
+	
+	// Tipo 2
+	public Double mediaBPM2() {
+		return this.Canciones.stream().mapToInt(Cancion::getBpm).average().getAsDouble();
+	}
+	
+	// Tipo 3
+	public List<Cancion> cancionesDeUnGenero2(String genero){
+		return this.Canciones.stream().filter(c -> c.getGenres().contains(genero)).collect(Collectors.toList());
+	}
+	
+	// Tipo 4
+	public Cancion cancionPremiadaMasReproducciones(Boolean award) {
+		return this.Canciones.stream().filter(c -> c.getAward().equals(award)).max(Comparator.comparing(Cancion::getReproductions)).get();
+	}
+	
+	// Tipo 5
+	public List<Cancion> cancionesTopHitsOrdenadas(Popularity pop){
+		return this.Canciones.stream().filter(c -> c.getPopularity().equals(pop)).sorted(Comparator.comparing(Cancion::getScore))
+				.collect(Collectors.toList());
+	}
+	
+	// BLOQUE II
+	// Tipo 6
+	public Map<Integer, List<Cancion>> mapCancionesPorAño2() {
+		return this.Canciones.stream().collect(Collectors.groupingBy(c -> c.getDate().getYear(),
+				Collectors.mapping(c -> c,Collectors.toList())));
+	}
+	
+	// Tipo 7
+	public Map<String, List<String>> mapArtistasPorPais(){
+		return this.Canciones.stream().collect(Collectors.groupingBy(c -> c.getData().getCountry(),
+				Collectors.mapping(c -> c.getData().getArtist(), Collectors.toList())));
+	}
+	
+	// Tipo 8
+	public Map<String, Cancion> mapCancionMaxValoracionPorPais(){
+		return this.Canciones.stream().collect(Collectors.groupingBy(c -> c.getData().getCountry(),
+				Collectors.collectingAndThen(Collectors.maxBy(Comparator.comparing(Cancion::getScore)), c2 -> c2.get())));
+	}
+	
+	// Tipo 9
+	public Map<String, List<String>> mejoresCancionesPorAutor(){
+		return this.Canciones.stream().collect(Collectors.groupingBy(c -> c.getData().getArtist(), TreeMap::new, 
+				Collectors.collectingAndThen(Collectors.toList(), list -> getCancionArtista(list))));
+	}
+	
+	public List<String> getCancionArtista(List<Cancion> lista){
+		return lista.stream().sorted(Comparator.comparing(Cancion::getScore)).limit(2).map(c -> c.getData().getTitle())
+				.collect(Collectors.toList());
+	}
+	
+	// Tipo 10
+	public String getArtistaMejorValorado() {
+		Map<String, Double> map = this.Canciones.stream().collect(Collectors.groupingBy(c -> c.getData().getArtist(),
+				Collectors.averagingDouble(Cancion::getScore)));
+		return map.entrySet().stream().max(Comparator.comparing(Entry::getValue)).get().getKey();
+	}
+	
+	
+	
+	
+	
+	
+	
 }

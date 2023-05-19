@@ -4,11 +4,15 @@ import fp.utiles.Checkers;
 import fp.utiles.Ficheros;
 import fp.utiles.Parsers;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import fp.Canciones.Data;
 import fp.Canciones.Cancion;
@@ -48,7 +52,7 @@ public class FactoriaCanciones {
 		return new Cancion(data, genres, fecha, time, bpm, duration, score, award, reproductions, pop);
 	}
 
-	public static List<Cancion>leeCanciones(String rutaFichero) {
+	public static List<Cancion> leeCanciones(String rutaFichero) {
 		Checkers.checkNoNull(rutaFichero);
 		List<String> lineas =
 				//Aquí esta leyendo los datos y metiendolos en un lista transformandolos en cadena
@@ -64,4 +68,18 @@ public class FactoriaCanciones {
 		}
 		return res;
 	}
+	
+	public static ListaCanciones leefichero2(String rutaFichero){
+        Checkers.checkNoNull(rutaFichero);
+        Stream<Cancion> res;
+        ListaCanciones c = null;
+        try {
+            res = Files.lines(Paths.get(rutaFichero)).skip(1).map(FactoriaCanciones::parseaCanciones);
+            c = new ListaCanciones(res);
+        } catch (IOException e) {
+            System.out.println("No se ha encontrado el fichero " + rutaFichero);
+            e.printStackTrace();
+        }
+        return c;
+    } 
 }

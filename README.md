@@ -88,6 +88,7 @@ Clase contenedora de objetos de tipo Cancion.
 **Constructores**
 * C1: Crea un objeto de tipo Canciones sin ninguna cancion almacenada.
 * C2: Crea un objeto de tipo Canciones(List listaCanciones).
+* C3: Crea un objeto de tipo Canciones(Stream listaCanciones).
 
 **Criterio de igualdad**
 * Dos canciones son iguales si lo son sus propiedades.
@@ -98,3 +99,15 @@ Clase contenedora de objetos de tipo Cancion.
 * _cancionesDeUnGenero(String genero):_ Devuelve una List en la que estan las canciones que tienen el genero introducido como parámetro.
 * _cancionesPorAño():_ Devuelve un Map en el que la clave es el año en el que se publicó una cancion y el valor asociado son las canciones que se publicaron en ese año.
 * _mapCancionesPorPaises():_ Devuelve un Map que tiene como claves cada pais del dataset, los cuales tienen asociados como valor el numero de canciones que se publicaron de ese pais.
+
+ --> Metodos con Stream <--
+* _existeCancion2(String title)_: Devuelve una respuesta de tipo Boolean dependiendo si el titulo de la cancion pasado como parametro existe en la lista de todos las canciones.
+* _mediaBPM2()_: Devuelve un valor Double que es la media de beats por minuto de las canciones del dataset.
+* _cancionesDeUnGenero2(String genero):_ Devuelve una List en la que estan las canciones que tienen el genero introducido como parámetro.
+* _cancionPremiadaMasReproducciones(Boolean award)_: Devuelve la cancion premiada con mas reproducciones.
+* _cancionesTopHitsOrdenadas(Popularity pop)_: Devuelve una lista de canciones con la popularidad "pop" ordenada de menor a mayor valoracion.
+* _mapCancionesPorAño2()_: Devuelve un map con años como clave, los cuales tienen asociadas las canciones publicadas ese año.
+* _mapArtistasPorPais()_: Devuelve un map con los paises como clave, los cuales tienen asociadas los artistas de ese pais.
+* _mapCancionMaxValoracionPorPais()_: Devuelve un map con el pais como clave y como valor la cancion con mas valoracion.
+* _mejoresCancionesPorAutor()_: Devuelve un map con el nombre del artista como clave y como valor sus 2 canciones mejor valoradas
+* _getArtistaMejorValorado()_: Devuelve el nombre del artista con la mejor valoracion media.
